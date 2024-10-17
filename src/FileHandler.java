@@ -26,8 +26,8 @@ public FileHandler(){
         File fileSpeed = new File(inputSpeed);
 
     }
-    catch (){
-
+    catch (IOException e){
+        throw new (e.getCause());
     }
 
 
