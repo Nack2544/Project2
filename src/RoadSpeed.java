@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+
 import java.util.Date;
 
 public class RoadSpeed {
@@ -8,20 +8,26 @@ public class RoadSpeed {
     private double speedSensor2;
 
     public  RoadSpeed(Date date, String time, double speedSensor1, double speedSensor2){
-
+        this.date = date;
     }
 
     public String getFileData(){
+
     }
 
     public Date getDate(){
         return date;
     }
+
+    /**
+     * setDate
+     * @param date
+     */
     public void setDate(Date date){
 
     }
     public String getTime(){
-
+        return time;
     }
 
     public void setTime(String time){

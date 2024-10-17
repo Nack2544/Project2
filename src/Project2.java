@@ -1,5 +1,8 @@
 import java.io.File;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 /**
  * Project2 
@@ -10,23 +13,12 @@ import java.util.Scanner;
 public class Project2 {
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        FileHandler fileHandler = new FileHandler();
 
-        System.out.print("Enter Path and Name of Volume and Speed Data File ");
-        String input = in.next();
-        
-        File file = new File(input);
-
-        boolean found = false;
-
+    ArrayList<RoadSection> createRoadSection = new ArrayList<RoadSection>();
+    ArrayList<RoadVolume> volumeList = new ArrayList<RoadVolume>();
+    ArrayList<RoadSpeed> speedList = new ArrayList<RoadSpeed>();
 
         
     }
-    /**
-     * 
-     */
-    public void loadMethod() {
-    	
-    }
+
 }
