@@ -27,7 +27,7 @@ public FileHandler(){
 
     }
     catch (IOException e){
-        throw new (e.getCause());
+        throw new
     }
 
 

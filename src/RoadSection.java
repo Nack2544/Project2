@@ -17,56 +17,56 @@ public class RoadSection {
 
     }
 
-    public RoadVolume getRoadVolume(){
-
+    public RoadVolume getRoadVolume() {
+        return roadVolume;
     }
 
-    public void setRoadVolume(RoadVolume roadVolume){
-
+    public void setRoadVolume(RoadVolume roadVolume) {
+        this.roadVolume = roadVolume;
     }
 
-    public RoadSpeed getRoadSpeed(){
-
+    public RoadSpeed getRoadSpeed() {
+        return roadSpeed;
     }
 
-    public void setRoadSpeed(RoadSpeed roadSpeed){
-
+    public void setRoadSpeed(RoadSpeed roadSpeed) {
+        this.roadSpeed = roadSpeed;
+    }
+    public int getVolumeTotal() {
+        return volumeTotal;
     }
 
-    public int getVolumeTotal(){
-
+    public void setVolumeTotal(int volumeTotal) {
+        this.volumeTotal = volumeTotal;
     }
 
-    public void setVolumeTotal(int total){
 
+    public double getVolumeAvg() {
+        return volumeAvg;
     }
 
-    public double getVolumeAvg(){
-
+    public void setVolumeAvg(double volumeAvg) {
+        this.volumeAvg = volumeAvg;
     }
 
-    public void setVolumeAvg(double avg){
+    public double getSpeedAvg() {
 
+        return speedAvg;
     }
 
-    public double getSpeedAvg(){
-
+    public void setSpeedAvg(double speedAvg) {
+        this.speedAvg = speedAvg;
     }
-
-    public void setSpeedAvg(double avg){
-
-    }
-
     public int calcVolumeTotal(){
-
+       return 0;
     }
 
     public double calcVolumeAvg(){
-
+       return 0;
     }
 
     public double calcSpeedAvg(){
-
+       return 0;
     }
 
 
