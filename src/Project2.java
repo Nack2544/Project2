@@ -14,9 +14,6 @@ public class Project2 {
 
     public static void main(String[] args) {
 
-    ArrayList<RoadSection> createRoadSection = new ArrayList<RoadSection>();
-    ArrayList<RoadVolume> volumeList = new ArrayList<RoadVolume>();
-    ArrayList<RoadSpeed> speedList = new ArrayList<RoadSpeed>();
 
         
     }
