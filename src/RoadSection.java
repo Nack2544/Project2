@@ -14,48 +14,38 @@ import java.util.ArrayList;
  */
 public class RoadSection {
 
-    /**
-     * The RoadVolume object associated with this road section, storing volume data.
-     */
-    private RoadVolume roadVolume;
-
-    /**
-     * The RoadSpeed object associated with this road section, storing speed data.
-     */
+    
+    private RoadVolume roadVolume; 
     private RoadSpeed roadSpeed;
-
-    /**
-     * Total volume calculated across all sensors in this section.
-     */
     private int volumeTotal;
-
-    /**
-     * Average volume calculated across all sensors in this section.
-     */
     private double volumeAvg;
-
-    /**
-     * Average speed of vehicles in this road section.
-     */
     private double speedAvg;
 
     /**
      * Default constructor that initializes RoadVolume and RoadSpeed objects.
      */
-    public RoadSection() {
-        // Initialize road volume and road speed objects.
-        this.roadVolume = new RoadVolume();
-        this.roadSpeed = new RoadSpeed();
-    }
+    public RoadSection(RoadVolume roadVolume, RoadSpeed roadSpeed, int volumeTotal, double volumeAvg, double speedAvg) {
+		super();
+		this.roadVolume = roadVolume;
+		this.roadSpeed = roadSpeed;
+		this.volumeTotal = volumeTotal;
+		this.volumeAvg = volumeAvg;
+		this.speedAvg = speedAvg;
+	}
 
-    /**
+	public RoadSection(RoadVolume roadVolume, RoadSpeed roadSpeed) {
+		
+	}
+
+	/**
      * Retrieves a formatted string containing all data related to the road section.
      *
      * @return A string with the road section's volume and speed data.
      */
     public String getFileData() {
-        // Placeholder, requires implementation to format and return relevant data.
-        return "";
+        String volumeData = roadVolume.getFileData();
+        String speedData = roadSpeed.getFileData();
+        return volumeData + speedData;
     }
 
     /**
@@ -164,7 +154,7 @@ public class RoadSection {
      * @return The average volume.
      */
     public double calcVolumeAvg() {
-        // Placeholder, requires implementation.
+ 
         return 0.0;
     }
 
@@ -174,7 +164,7 @@ public class RoadSection {
      * @return The average speed.
      */
     public double calcSpeedAvg() {
-        // Placeholder, requires implementation.
+    	
         return 0.0;
     }
 }

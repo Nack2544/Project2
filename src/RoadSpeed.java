@@ -1,4 +1,4 @@
-
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RoadSpeed {
@@ -7,14 +7,20 @@ public class RoadSpeed {
     private double speedSensor1;
     private double speedSensor2;
 
-    public  RoadSpeed(Date date, String time, double speedSensor1, double speedSensor2){
+    // Constructor
+    public RoadSpeed(Date date, String time, double speedSensor1, double speedSensor2) {
         this.date = date;
+        this.time = time;
+        this.speedSensor1 = speedSensor1;
+        this.speedSensor2 = speedSensor2;
     }
 
-    public String getFileData(){
-        return "";
+    // Method to format data for output (like in a file)
+    public String getFileData() {
+    	return speedSensor1 + "," + speedSensor2;
     }
 
+    // Getter and setter methods
     public Date getDate() {
         return date;
     }
@@ -47,4 +53,3 @@ public class RoadSpeed {
         this.speedSensor2 = speedSensor2;
     }
 }
-

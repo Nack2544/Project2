@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -11,34 +12,12 @@ import java.util.Date;
  */
 public class RoadVolume {
 
-    /**
-     * The date of the traffic recording.
-     */
+    
     private Date date;
-
-    /**
-     * The time of the traffic recording.
-     */
     private String time;
-
-    /**
-     * Volume data from sensor 1.
-     */
     private int volumeSensor1;
-
-    /**
-     * Volume data from sensor 2.
-     */
     private int volumeSensor2;
-
-    /**
-     * Volume data from sensor 3.
-     */
     private int volumeSensor3;
-
-    /**
-     * Volume data from sensor 4.
-     */
     private int volumeSensor4;
     /**
      * Construct new RoadVolume object with the given data
@@ -49,23 +28,28 @@ public class RoadVolume {
      * @param volumeSensor3Input
      * @param volumeSensor4Input
      */
-    public void RoadVolume(Date dateInput, String timeInput, int volumeSensor1Input, int volumeSensor2Input, int volumeSensor3Input, int volumeSensor4Input) {
-        this.date = dateInput;
-        this.time = timeInput;
-        this.volumeSensor1 = volumeSensor1Input;
-        this.volumeSensor2 = volumeSensor2Input;
-        this.volumeSensor3 = volumeSensor3Input;
-        this.volumeSensor4 = volumeSensor4Input;
-    }
-    /**
+    
+    public RoadVolume(Date date, String time, int volumeSensor1, int volumeSensor2, int volumeSensor3, int volumeSensor4) {
+		
+		this.date = date;
+		this.time = time;
+		this.volumeSensor1 = volumeSensor1;
+		this.volumeSensor2 = volumeSensor2;
+		this.volumeSensor3 = volumeSensor3;
+		this.volumeSensor4 = volumeSensor4;
+	}
+
+
+	/**
      * Generates a formatted string of the object's data suitable for file output.
      *
      * @return A string containing the date, time, and sensor values.
      */
     public String getFileData() {
         // Return a string with date, time, and sensor data in a readable format.
-        return String.format("Date: %s, Time: %s, Sensor1: %d, Sensor2: %d, Sensor3: %d, Sensor4: %d",
-                date, time, volumeSensor1, volumeSensor2, volumeSensor3, volumeSensor4);
+        SimpleDateFormat formatDate = new SimpleDateFormat("MM/dd/yyyy");
+        String stringDate = formatDate.format(date);
+        return String.format("%s,%s,%d,%d,%d,%d", stringDate, time, volumeSensor1, volumeSensor2, volumeSensor3, volumeSensor4);
     }
 
     /**
