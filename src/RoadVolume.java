@@ -19,14 +19,15 @@ public class RoadVolume {
     private int volumeSensor2;
     private int volumeSensor3;
     private int volumeSensor4;
+
     /**
-     * Construct new RoadVolume object with the given data
-     * @param dateInput
-     * @param timeInput
-     * @param volumeSensor1Input
-     * @param volumeSensor2Input
-     * @param volumeSensor3Input
-     * @param volumeSensor4Input
+     * Construct RoadVolume
+     * @param date
+     * @param time
+     * @param volumeSensor1
+     * @param volumeSensor2
+     * @param volumeSensor3
+     * @param volumeSensor4
      */
     
     public RoadVolume(Date date, String time, int volumeSensor1, int volumeSensor2, int volumeSensor3, int volumeSensor4) {
@@ -49,7 +50,7 @@ public class RoadVolume {
         // Return a string with date, time, and sensor data in a readable format.
         SimpleDateFormat formatDate = new SimpleDateFormat("MM/dd/yyyy");
         String stringDate = formatDate.format(date);
-        return String.format("%s,%s,%d,%d,%d,%d", stringDate, time, volumeSensor1, volumeSensor2, volumeSensor3, volumeSensor4);
+        return String.format("%s,%s,%s,%s,%s,%s", stringDate, time, volumeSensor1, volumeSensor2, volumeSensor3, volumeSensor4);
     }
 
     /**

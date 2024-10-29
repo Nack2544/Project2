@@ -19,17 +19,15 @@ public class FileHandler {
      * @throws ParseException if there's an error parsing dates
      */
 public static ArrayList<RoadVolume> loadVolumeData(String filename) throws FileNotFoundException, ParseException{
-    ArrayList<RoadVolume> volumeList = new ArrayList<RoadVolume>();
     Scanner scnr = new Scanner(System.in);
-  	File file = new File(filename);
-  
-    Scanner fileScanner = new Scanner(file);
-    if(fileScanner.hasNextLine()) {
-    	fileScanner.nextLine();
-    }
+    ArrayList<RoadVolume> volumeList = new ArrayList<RoadVolume>();
     SimpleDateFormat formatDate = new SimpleDateFormat("MM/dd/yyyy");
     try{
-  
+    File file = new File(filename);
+    Scanner fileScanner = new Scanner(file);
+        if(fileScanner.hasNextLine()) {
+            fileScanner.nextLine();
+        }
     while(fileScanner.hasNextLine()){
         String line = scnr.nextLine();
         String[] data = line.split(",");
@@ -42,9 +40,7 @@ public static ArrayList<RoadVolume> loadVolumeData(String filename) throws FileN
         
         RoadVolume roadVolume = new RoadVolume(stringDate, time, volumeSensor1, volumeSensor2, volumeSensor3, volumeSensor4);
         volumeList.add(roadVolume);
-        for(RoadVolume road: volumeList) {
-        	System.out.println(road);
-        }
+
         
     }//end of while
     }// end of try
@@ -56,10 +52,8 @@ public static ArrayList<RoadVolume> loadVolumeData(String filename) throws FileN
     	System.out.println("Bad exception " + e.getMessage());
     }
     finally {
-    	if(scnr!=null) {
-    		scnr.close();
-    	}
-    	System.out.println("Volume Data loaded");
+
+        scnr.close();
     }
     return volumeList;
 }    
@@ -68,17 +62,17 @@ public static ArrayList<RoadSpeed> loadSpeedData(String filename) throws FileNot
 	ArrayList<RoadSpeed> speedList = new ArrayList<RoadSpeed>();
 	Scanner scnr = new Scanner(System.in);
 	
+	try {
 	File file = new File(filename);
     
     Scanner fileScanner = new Scanner(file); 
     if(fileScanner.hasNextLine()) {
     	fileScanner.nextLine();
     }
-	try {
     while(fileScanner.hasNextLine()){
         String line = scnr.nextLine();
         String[] data = line.split(",");
-        SimpleDateFormat formatDate = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
         Date stringDate = formatDate.parse(data[0]);
         String time = data[1];
         int speedSensor1 = Integer.parseInt(data[2]);
@@ -97,7 +91,7 @@ public static ArrayList<RoadSpeed> loadSpeedData(String filename) throws FileNot
 		if(scnr!=null) {
     		scnr.close();
     	}
-		System.out.println("Speed Data loaded");
+
 	}
 	return speedList;
 }

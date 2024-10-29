@@ -30,7 +30,9 @@ public class Project2 {
 			try {
 				System.out.print("Enter Path and Name of Volume and Speed Data File: ");
 				volumeFileName = scnr.nextLine();
+
 				volumeList = FileHandler.loadVolumeData(volumeFileName);
+
 				validInput = true;
 				//    	FileHandler.loadSpeedData(loadSpeeds);
 
