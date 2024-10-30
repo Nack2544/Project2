@@ -24,18 +24,18 @@ public class RoadSection {
     /**
      * Default constructor that initializes RoadVolume and RoadSpeed objects.
      */
-    public RoadSection(RoadVolume roadVolume, RoadSpeed roadSpeed, int volumeTotal, double volumeAvg, double speedAvg) {
+
+	public RoadSection(RoadVolume roadVolume, RoadSpeed roadSpeed) {
 		super();
 		this.roadVolume = roadVolume;
 		this.roadSpeed = roadSpeed;
-		this.volumeTotal = volumeTotal;
-		this.volumeAvg = volumeAvg;
-		this.speedAvg = speedAvg;
-	}
+		this.volumeTotal = calcVolumeTotal();
+		this.volumeAvg = calcVolumeAvg();
+		this.speedAvg = calcSpeedAvg();
 
-	public RoadSection(RoadVolume roadVolume, RoadSpeed roadSpeed) {
-		
-	}
+	} 
+
+
 
 	/**
      * Retrieves a formatted string containing all data related to the road section.
@@ -45,7 +45,9 @@ public class RoadSection {
     public String getFileData() {
         String volumeData = roadVolume.getFileData();
         String speedData = roadSpeed.getFileData();
-        return volumeData + speedData;
+        
+        String additionalData = String.format("%d,%.2f,%.2f", calcVolumeTotal(), calcVolumeAvg(), calcSpeedAvg());
+        return volumeData + "," + speedData + "," + additionalData;
     }
 
     /**
@@ -144,7 +146,7 @@ public class RoadSection {
      * @return The total volume.
      */
     public int calcVolumeTotal() {
-        // Placeholder, requires implementation.
+    	volumeTotal = (roadVolume.getVolumeSensor1() + roadVolume.getVolumeSensor2() + roadVolume.getVolumeSensor3() + roadVolume.getVolumeSensor4());
         return 0;
     }
 
@@ -154,7 +156,7 @@ public class RoadSection {
      * @return The average volume.
      */
     public double calcVolumeAvg() {
- 
+    	volumeAvg = calcVolumeTotal() /4;
         return 0.0;
     }
 
@@ -164,7 +166,7 @@ public class RoadSection {
      * @return The average speed.
      */
     public double calcSpeedAvg() {
-    	
-        return 0.0;
+    	speedAvg = (roadSpeed.getSpeedSensor1() + roadSpeed.getSpeedSensor2())/2;
+        return speedAvg;
     }
 }

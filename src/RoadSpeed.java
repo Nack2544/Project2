@@ -9,6 +9,7 @@ public class RoadSpeed {
 
     // Constructor
     public RoadSpeed(Date date, String time, double speedSensor1, double speedSensor2) {
+    	super();
         this.date = date;
         this.time = time;
         this.speedSensor1 = speedSensor1;
