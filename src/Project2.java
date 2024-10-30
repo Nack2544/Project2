@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
- * Project2 
+ * Project2
  * @author Suphakrit Jinaongkan
  * @version 1.0.
  * @since 2024-10-14
@@ -24,47 +24,64 @@ public class Project2 {
 		ArrayList<RoadSpeed> speedList = null;
 		String volumeFileName;
 		String speedFileName;
-//		boolean validInput = false;
+		boolean validInput = false;
 
-		while(volumeList == null) {
-			try {
+		while(!validInput){
+			try{
 				System.out.print("Enter Path and Name of Volume and Speed Data File: ");
 				volumeFileName = scnr.next();
-				
-				volumeList = FileHandler.loadVolumeData(volumeFileName);	
-				System.out.println("Loading Volume Data");
-				if(volumeList != null) {
-					System.out.println("Volume Data loaded");
-				}
-				
-//				validInput = true;			
-				
-			}
-			catch(FileNotFoundException e) {
-				System.out.println("File not found " + e.getMessage());
-			}	
-		}
-		
-		
-		while(speedList == null) {
-			try {
 				speedFileName = scnr.next();
-				speedList = FileHandler.loadSpeedData(speedFileName);
+				System.out.println("Loading Volume Data");
+				volumeList = FileHandler.loadVolumeData(volumeFileName);
 				System.out.println("Loading Speed Data");
-				if(speedList != null) {
-					System.out.println("Speed Data loaded");
-				}
+				speedList = FileHandler.loadSpeedData(speedFileName);
+				validInput = true;
+
+
 			}
-			catch(FileNotFoundException e) {
-				System.out.println("File not found "+ e.getMessage());
+			catch (FileNotFoundException e){
+				System.out.println("File not found Error: " + e.getMessage());
 			}
+			finally {
+				System.out.println();
+			}
+			}
+		createRoadSection(volumeList, speedList);
+//		printVolume(volumeList);
+//		System.out.println("------------");
+//		printSpeed(speedList);
 		}
-		if(volumeList != null && speedList != null) {
-			createRoadSection(volumeList, speedList);
-			
-		}
-		scnr.close();
-	}
+//		while(!validInput) {
+//			try {
+//				System.out.print("Enter Path and Name of Volume and Speed Data File: ");
+//				volumeFileName = scnr.next();
+//				volumeList = FileHandler.loadVolumeData(volumeFileName);
+//				System.out.println("Loading Volume Data");
+//				validInput = true;
+//
+//			}
+//			catch(FileNotFoundException e) {
+//				System.out.println("File not found " + e.getMessage());
+//			}
+//		}
+//
+//		validInput = false;
+//		while(!validInput) {
+//			try {
+//				speedFileName = scnr.next();
+//				speedList = FileHandler.loadSpeedData(speedFileName);
+//				System.out.println("Loading Speed Data");
+//			}
+//			catch(FileNotFoundException e) {
+//				System.out.println("File not found "+ e.getMessage());
+//			}
+//		}
+//		if(volumeList != null && speedList != null) {
+//			createRoadSection(volumeList, speedList);
+//			scnr.close();
+//		}
+
+//	}
 
 
 	public static void createRoadSection(ArrayList<RoadVolume> volumeList, ArrayList<RoadSpeed> speedList){
@@ -72,13 +89,14 @@ public class Project2 {
 
 		for(RoadVolume volume: volumeList) {
 			for(RoadSpeed speed: speedList) {
-				SimpleDateFormat formatDate = new SimpleDateFormat("MM/dd/yyyy");
-				String formattedVolumeDate = formatDate.format(volume.getFileData());
-				String formattedSpeedDate = formatDate.format(speed.getFileData());
+				SimpleDateFormat volumeFormat = new SimpleDateFormat("MM/dd/yyyy");
+				SimpleDateFormat speedFormat = new SimpleDateFormat("yyyy-MM-dd");
+				String formattedVolumeDate = volumeFormat.format(volume.getFileData());
+				String formattedSpeedDate = speedFormat.format(speed.getFileData());
 
+				RoadSection roadSection = new RoadSection(volume, speed);
+				sectionList.add(roadSection);
 				if (formattedVolumeDate.equals(formattedSpeedDate) && volume.getTime().equals(speed.getTime())) {
-					RoadSection roadSection = new RoadSection(volume, speed);
-					sectionList.add(roadSection);
 					break; // Exit the inner loop once a match is found
 				}
 			}
@@ -88,4 +106,16 @@ public class Project2 {
 		FileHandler.writeRoadSectionData(sectionList);
 
 	}
+public static void printVolume(ArrayList<RoadVolume> volumeList){
+	for(RoadVolume volume: volumeList){
+		System.out.println(volume.getFileData());
+	}
 }
+
+public static void printSpeed(ArrayList<RoadSpeed> speedList){
+		for(RoadSpeed speed: speedList){
+			System.out.println(speed.getFileData());
+		}
+}
+}
+

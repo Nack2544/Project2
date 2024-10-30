@@ -19,7 +19,7 @@ public class FileHandler {
 	 * @throws FileNotFoundException if the file not found
 	 * @throws ParseException if there's an error parsing dates
 	 */
-	public static ArrayList<RoadVolume> loadVolumeData(String filename) throws FileNotFoundException, ParseException{
+	public static ArrayList<RoadVolume> loadVolumeData(String filename) throws ParseException, FileNotFoundException {
 		
 		ArrayList<RoadVolume> volumeList = new ArrayList<RoadVolume>();
 		File file = new File(filename);
@@ -41,7 +41,7 @@ public class FileHandler {
 
 				RoadVolume roadVolume = new RoadVolume(stringDate, time, volumeSensor1, volumeSensor2, volumeSensor3, volumeSensor4);
 				volumeList.add(roadVolume);
-			System.out.println("");	
+
 
 			}//end of while
 		}// end of try
@@ -52,9 +52,10 @@ public class FileHandler {
 		}
 		finally {
 			
-			if(fileScanner != null) {
+
 				fileScanner.close();
-			}
+
+            System.out.println("Volume Data Loaded");
 		}
 
 		return volumeList;
@@ -67,25 +68,25 @@ public class FileHandler {
 	 * @throws FileNotFoundException
 	 * @throws ParseException
 	 */
-	public static ArrayList<RoadSpeed> loadSpeedData(String filename) throws FileNotFoundException, ParseException{
+	public static ArrayList<RoadSpeed> loadSpeedData(String filename) throws ParseException, FileNotFoundException {
 		ArrayList<RoadSpeed> speedList = new ArrayList<RoadSpeed>();
 
 		File file = new File(filename);
 		Scanner fileScanner = new Scanner(file); 
+		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+		if(fileScanner.hasNextLine()) {
+			fileScanner.nextLine();
+		}
 
 		try {
-			if(fileScanner.hasNextLine()) {
-				fileScanner.nextLine();
-			}
-			SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd-yyyy");
 			while(fileScanner.hasNextLine()){
 				String line = fileScanner.nextLine();
 				String[] data = line.split(",");
 				
 				Date stringDate = formatDate.parse(data[0]);
 				String time = data[1];
-				int speedSensor1 = Integer.parseInt(data[2]);
-				int speedSensor2 = Integer.parseInt(data[3]);
+				double speedSensor1 = Double.parseDouble(data[2]);
+				double speedSensor2 = Double.parseDouble(data[3]);
 
 
 				RoadSpeed roadSpeed = new RoadSpeed(stringDate, time, speedSensor1, speedSensor2);
@@ -93,14 +94,13 @@ public class FileHandler {
 			}//end of while
 		}// end of try
 
-		catch (ParseException | NumberFormatException e){
+		catch (ParseException | NumberFormatException e) {
 //			throw new FileNotFoundException(e.getMessage());
-			System.out.println(e.getMessage());
+			System.out.println("Error input" + e.getMessage());
 		}
 		finally {
-			if(fileScanner!=null) {
-				fileScanner.close();
-			}
+            fileScanner.close();
+            System.out.println("Speed Data Loaded");
 
 		}
 		return speedList;

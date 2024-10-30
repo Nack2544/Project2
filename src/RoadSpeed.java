@@ -18,7 +18,9 @@ public class RoadSpeed {
 
     // Method to format data for output (like in a file)
     public String getFileData() {
-    	return speedSensor1 + "," + speedSensor2;
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        String stringFormat = formatDate.format(date);
+    	return String.format("%s,%s,%s,%s", stringFormat,time, speedSensor1, speedSensor2);
     }
 
     // Getter and setter methods
