@@ -44,10 +44,14 @@ public class RoadSection {
      */
     public String getFileData() {
         String volumeData = roadVolume.getFileData();
-        String speedData = roadSpeed.getFileData();
+//        String speedData = roadSpeed.getFileData();
+        double speedData = roadSpeed.getSpeedSensor1();
+        double speedData2 = roadSpeed.getSpeedSensor2();
+
         
         String additionalData = String.format("%d,%.2f,%.2f", calcVolumeTotal(), calcVolumeAvg(), calcSpeedAvg());
-        return volumeData + "," + speedData + "," + additionalData;
+//        return volumeData + "," + speedData + "," + additionalData;
+        return volumeData + "," + speedData + "," + speedData2 + "," + additionalData;
     }
 
     /**
@@ -147,7 +151,7 @@ public class RoadSection {
      */
     public int calcVolumeTotal() {
     	volumeTotal = (roadVolume.getVolumeSensor1() + roadVolume.getVolumeSensor2() + roadVolume.getVolumeSensor3() + roadVolume.getVolumeSensor4());
-        return 0;
+        return volumeTotal;
     }
 
     /**
@@ -156,8 +160,8 @@ public class RoadSection {
      * @return The average volume.
      */
     public double calcVolumeAvg() {
-    	volumeAvg = calcVolumeTotal() /4;
-        return 0.0;
+    	volumeAvg = (double) calcVolumeTotal() /4;
+        return volumeAvg;
     }
 
     /**

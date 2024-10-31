@@ -12,12 +12,11 @@ import java.util.Scanner;
 public class FileHandler {
 
 	/**
-	 * 
 	 * Load volume data from the specified file into a list
-	 * 
 	 * @param filename
-	 * @throws FileNotFoundException if the file not found
-	 * @throws ParseException if there's an error parsing dates
+	 * @return
+	 * @throws ParseException
+	 * @throws FileNotFoundException
 	 */
 	public static ArrayList<RoadVolume> loadVolumeData(String filename) throws ParseException, FileNotFoundException {
 		
@@ -27,21 +26,25 @@ public class FileHandler {
 		if(fileScanner.hasNextLine()) {
 			fileScanner.nextLine();
 		}
-		SimpleDateFormat formatDate = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yy");
+		SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
 		try{
 			while(fileScanner.hasNextLine()){
 				String line = fileScanner.nextLine();
 				String[] data = line.split(",");
-				Date stringDate = formatDate.parse(data[0]);
+
+				Date inputDate = inputFormat.parse(data[0]);
+				String inputString = outputFormat.format(inputDate);
+				Date outputDate = outputFormat.parse(inputString);
 				String time = data[1];
 				int volumeSensor1 = Integer.parseInt(data[2]);
 				int volumeSensor2 = Integer.parseInt(data[3]);
 				int volumeSensor3 = Integer.parseInt(data[4]);
 				int volumeSensor4 = Integer.parseInt(data[5]);
 
-				RoadVolume roadVolume = new RoadVolume(stringDate, time, volumeSensor1, volumeSensor2, volumeSensor3, volumeSensor4);
+				RoadVolume roadVolume = new RoadVolume(outputDate, time, volumeSensor1, volumeSensor2, volumeSensor3, volumeSensor4);
 				volumeList.add(roadVolume);
-
+//				System.out.println(inputString);
 
 			}//end of while
 		}// end of try
@@ -73,7 +76,7 @@ public class FileHandler {
 
 		File file = new File(filename);
 		Scanner fileScanner = new Scanner(file); 
-		SimpleDateFormat formatDate = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
 		if(fileScanner.hasNextLine()) {
 			fileScanner.nextLine();
 		}
@@ -106,6 +109,10 @@ public class FileHandler {
 		return speedList;
 	}
 
+	/**
+	 * create a new array list using a combination of volumelist and speedlist
+	 * @param sectionList
+	 */
 	public static void writeRoadSectionData(ArrayList<RoadSection> sectionList){
 		try {
 			FileWriter fileWriter = new FileWriter("Road_Section_Data.csv");
@@ -120,7 +127,7 @@ public class FileHandler {
 			fileWriter.close();
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 }

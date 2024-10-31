@@ -48,6 +48,7 @@ public class Project2 {
 			}
 
 			}
+		
 		createRoadSection(volumeList, speedList);
 		scnr.close();
 //		printVolume(volumeList);
@@ -86,6 +87,11 @@ public class Project2 {
 
 //	}
 
+	/**
+	 * Create new array using volume and speed files 
+	 * @param volumeList
+	 * @param speedList
+	 */
 
 	public static void createRoadSection(ArrayList<RoadVolume> volumeList, ArrayList<RoadSpeed> speedList){
 		ArrayList<RoadSection> sectionList = new ArrayList<>();
@@ -96,10 +102,10 @@ public class Project2 {
 				String formattedVolumeDate = dateFormat.format(volume.getData());
 				String formattedSpeedDate = dateFormat.format(speed.getDate());
 
+				if (formattedVolumeDate.equals(formattedSpeedDate) && volume.getTime().equals(speed.getTime())) {
 				RoadSection roadSection = new RoadSection(volume, speed);
 				sectionList.add(roadSection);
-				if (formattedVolumeDate.equals(formattedSpeedDate) && volume.getTime().equals(speed.getTime())) {
-					break; // Exit the inner loop once a match is found
+					 // Exit the inner loop once a match is found
 				}
 			}
 
@@ -119,5 +125,7 @@ public static void printSpeed(ArrayList<RoadSpeed> speedList){
 			System.out.println(speed.getFileData());
 		}
 }
+
+
 }
 
