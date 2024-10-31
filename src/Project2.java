@@ -44,9 +44,12 @@ public class Project2 {
 			}
 			finally {
 				System.out.println();
+
 			}
+
 			}
 		createRoadSection(volumeList, speedList);
+		scnr.close();
 //		printVolume(volumeList);
 //		System.out.println("------------");
 //		printSpeed(speedList);
@@ -89,10 +92,9 @@ public class Project2 {
 
 		for(RoadVolume volume: volumeList) {
 			for(RoadSpeed speed: speedList) {
-				SimpleDateFormat volumeFormat = new SimpleDateFormat("MM/dd/yyyy");
-				SimpleDateFormat speedFormat = new SimpleDateFormat("yyyy-MM-dd");
-				String formattedVolumeDate = volumeFormat.format(volume.getFileData());
-				String formattedSpeedDate = speedFormat.format(speed.getFileData());
+				SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+				String formattedVolumeDate = dateFormat.format(volume.getData());
+				String formattedSpeedDate = dateFormat.format(speed.getDate());
 
 				RoadSection roadSection = new RoadSection(volume, speed);
 				sectionList.add(roadSection);

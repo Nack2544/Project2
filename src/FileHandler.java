@@ -73,7 +73,7 @@ public class FileHandler {
 
 		File file = new File(filename);
 		Scanner fileScanner = new Scanner(file); 
-		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatDate = new SimpleDateFormat("MM/dd/yyyy");
 		if(fileScanner.hasNextLine()) {
 			fileScanner.nextLine();
 		}
@@ -82,7 +82,7 @@ public class FileHandler {
 			while(fileScanner.hasNextLine()){
 				String line = fileScanner.nextLine();
 				String[] data = line.split(",");
-				
+				//working on this line
 				Date stringDate = formatDate.parse(data[0]);
 				String time = data[1];
 				double speedSensor1 = Double.parseDouble(data[2]);
