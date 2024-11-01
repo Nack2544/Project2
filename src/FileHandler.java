@@ -12,122 +12,133 @@ import java.util.Scanner;
 public class FileHandler {
 
 	/**
-	 * Load volume data from the specified file into a list
-	 * @param filename
-	 * @return
-	 * @throws ParseException
-	 * @throws FileNotFoundException
+	 * Use to handle the files specifically for volume data
+	 * Parse data into the roadVolume object and stores them in a list
+	 * @param filename Names of the file that will interact with volume data
+	 * @return return an arraylist on each line of the Volume Data using comma to split the content
+	 * @throws ParseException if data parsing fails
+	 * @throws FileNotFoundException if the file input is not exist
 	 */
 	public static ArrayList<RoadVolume> loadVolumeData(String filename) throws ParseException, FileNotFoundException {
-		
-		ArrayList<RoadVolume> volumeList = new ArrayList<RoadVolume>();
+		ArrayList<RoadVolume> volumeList = new ArrayList<>(); // List to store volume data
 		File file = new File(filename);
-		Scanner fileScanner = new Scanner(file);
-		if(fileScanner.hasNextLine()) {
+		Scanner fileScanner = new Scanner(file); // Scanner for reading file contents
+
+		// Skip header line if present
+		if (fileScanner.hasNextLine()) {
 			fileScanner.nextLine();
 		}
-		SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yy");
-		SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
-		try{
-			while(fileScanner.hasNextLine()){
+
+		SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yy"); // Original date format
+		SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy"); // Target date format
+
+		try {
+			// Read and process each line of the file
+			while (fileScanner.hasNextLine()) {
 				String line = fileScanner.nextLine();
 				String[] data = line.split(",");
 
+				// Parse date and format it
 				Date inputDate = inputFormat.parse(data[0]);
 				String inputString = outputFormat.format(inputDate);
 				Date outputDate = outputFormat.parse(inputString);
+
+				// Extract and parse other data fields
 				String time = data[1];
 				int volumeSensor1 = Integer.parseInt(data[2]);
 				int volumeSensor2 = Integer.parseInt(data[3]);
 				int volumeSensor3 = Integer.parseInt(data[4]);
 				int volumeSensor4 = Integer.parseInt(data[5]);
 
+				// Create a RoadVolume object and add it to the list
 				RoadVolume roadVolume = new RoadVolume(outputDate, time, volumeSensor1, volumeSensor2, volumeSensor3, volumeSensor4);
 				volumeList.add(roadVolume);
-//				System.out.println(inputString);
-
-			}//end of while
-		}// end of try
-
-		catch (ParseException | NumberFormatException e){
-//			throw new FileNotFoundException(e.getMessage());
-			System.out.println(e.getMessage());
-		}
-		finally {
-			
-
-				fileScanner.close();
-
-            System.out.println("Volume Data Loaded");
+			}
+		} catch (ParseException | NumberFormatException e) {
+			// Handle parsing errors gracefully
+			System.out.println("Error parsing data: " + e.getMessage());
+		} finally {
+			// Close the scanner to prevent resource leaks
+			fileScanner.close();
+			System.out.println("Volume Data Loaded");
 		}
 
 		return volumeList;
-	}    // end of loadVolumeData method
+	}
 
 	/**
-	 * Load speed data from the specified file into a list
-	 * @param filename
-	 * @return
-	 * @throws FileNotFoundException
-	 * @throws ParseException
+	 * Use to handle the files by
+	 * @param filename Names of the file that will interact with volume data
+	 * @return return an arraylist on each line of the Volume Data using comma to split the content
+	 * @throws ParseException if data parsing fails
+	 * @throws FileNotFoundException if the file input is not exist
 	 */
 	public static ArrayList<RoadSpeed> loadSpeedData(String filename) throws ParseException, FileNotFoundException {
-		ArrayList<RoadSpeed> speedList = new ArrayList<RoadSpeed>();
-
+		ArrayList<RoadSpeed> speedList = new ArrayList<>(); // List to store speed data
 		File file = new File(filename);
-		Scanner fileScanner = new Scanner(file); 
-		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-		if(fileScanner.hasNextLine()) {
+		Scanner fileScanner = new Scanner(file); // Scanner for reading file contents
+		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd"); // Date format for parsing speed data
+
+		// Skip header line if present
+		if (fileScanner.hasNextLine()) {
 			fileScanner.nextLine();
 		}
 
 		try {
-			while(fileScanner.hasNextLine()){
+			// Read and process each line of the file
+			while (fileScanner.hasNextLine()) {
 				String line = fileScanner.nextLine();
 				String[] data = line.split(",");
-				//working on this line
+
+				// Parse date and other data fields
 				Date stringDate = formatDate.parse(data[0]);
 				String time = data[1];
 				double speedSensor1 = Double.parseDouble(data[2]);
 				double speedSensor2 = Double.parseDouble(data[3]);
 
-
+				// Create a RoadSpeed object and add it to the list
 				RoadSpeed roadSpeed = new RoadSpeed(stringDate, time, speedSensor1, speedSensor2);
-				speedList.add(roadSpeed);     
-			}//end of while
-		}// end of try
-
-		catch (ParseException | NumberFormatException e) {
-//			throw new FileNotFoundException(e.getMessage());
-			System.out.println("Error input" + e.getMessage());
+				speedList.add(roadSpeed);
+			}
+		} catch (ParseException | NumberFormatException e) {
+			// Handle parsing errors gracefully
+			System.out.println("Error parsing speed data: " + e.getMessage());
+		} finally {
+			// Close the scanner to prevent resource leaks
+			fileScanner.close();
+			System.out.println("Speed Data Loaded");
 		}
-		finally {
-            fileScanner.close();
-            System.out.println("Speed Data Loaded");
 
-		}
 		return speedList;
 	}
 
 	/**
-	 * create a new array list using a combination of volumelist and speedlist
-	 * @param sectionList
+	 * Writes road section data to a CSV file.
+	 * The CSV file includes headers and formatted data from RoadSection objects.
+	 *
+	 * @param sectionList List of RoadSection objects to be written to file
 	 */
-	public static void writeRoadSectionData(ArrayList<RoadSection> sectionList){
+	public static void writeRoadSectionData(ArrayList<RoadSection> sectionList) {
 		try {
+			// Create or overwrite the output file
 			FileWriter fileWriter = new FileWriter("Road_Section_Data.csv");
-			fileWriter.write("Date,Time,Volume_Sensor_2003,Volume_Sensor_2004,Volume_Sensor_2005,Volume_Sensor_2006,Speed_Sensor_2282,Speed_Sensor_2293,Volume_Total,Volume_Avg,Speed_Avg");
 
-			for(RoadSection roadSection: sectionList) {
+			// Write headers
+			fileWriter.write("Date,Time,Volume_Sensor_2003,Volume_Sensor_2004,Volume_Sensor_2005,Volume_Sensor_2006,Speed_Sensor_2282,Speed_Sensor_2293,Volume_Total,Volume_Avg,Speed_Avg\n");
+
+			// Write each road section data as a row in the CSV file
+			for (RoadSection roadSection : sectionList) {
 				String rowData = roadSection.getFileData();
 				fileWriter.write(rowData + "\n");
 			}
 
 			System.out.println("Road Section Data created");
+
+			// Close the file writer to save and release resources
 			fileWriter.close();
-		}
-		catch (IOException e) {
-			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			// Handle file writing errors gracefully
+			System.out.println("Error writing to file: " + e.getMessage());
 		}
 	}
 }

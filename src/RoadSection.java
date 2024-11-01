@@ -2,56 +2,51 @@ import java.util.ArrayList;
 
 /**
  * The RoadSection class stores and manages data about a specific road section,
- * including the traffic volume and speed metrics. It provides methods to calculate
+ * including traffic volume and speed metrics. It provides methods to calculate
  * total volume, average volume, and average speed for the section.
  *
  * This class interacts with the RoadVolume and RoadSpeed objects to retrieve
  * relevant data and allows setting and getting these objects.
  *
- * @author Suphakrit Jinaongkan
  * @version 1.0
  * @since 2024-10-23
  */
 public class RoadSection {
 
-    
-    private RoadVolume roadVolume; 
-    private RoadSpeed roadSpeed;
-    private int volumeTotal;
-    private double volumeAvg;
-    private double speedAvg;
+    private RoadVolume roadVolume; // Stores road volume data
+    private RoadSpeed roadSpeed;   // Stores road speed data
+    private int volumeTotal;       // Total volume across all sensors
+    private double volumeAvg;      // Average volume across all sensors
+    private double speedAvg;       // Average speed across all speed sensors
 
     /**
-     * Default constructor that initializes RoadVolume and RoadSpeed objects.
+     * Constructor that initializes RoadVolume and RoadSpeed objects and
+     * calculates volume and speed metrics.
+     *
+     * @param roadVolume The RoadVolume data for this section
+     * @param roadSpeed The RoadSpeed data for this section
      */
+    public RoadSection(RoadVolume roadVolume, RoadSpeed roadSpeed) {
+        this.roadVolume = roadVolume;
+        this.roadSpeed = roadSpeed;
+        this.volumeTotal = calcVolumeTotal();
+        this.volumeAvg = calcVolumeAvg();
+        this.speedAvg = calcSpeedAvg();
+    }
 
-	public RoadSection(RoadVolume roadVolume, RoadSpeed roadSpeed) {
-		super();
-		this.roadVolume = roadVolume;
-		this.roadSpeed = roadSpeed;
-		this.volumeTotal = calcVolumeTotal();
-		this.volumeAvg = calcVolumeAvg();
-		this.speedAvg = calcSpeedAvg();
-
-	} 
-
-
-
-	/**
+    /**
      * Retrieves a formatted string containing all data related to the road section.
      *
      * @return A string with the road section's volume and speed data.
      */
     public String getFileData() {
-        String volumeData = roadVolume.getFileData();
-//        String speedData = roadSpeed.getFileData();
-        double speedData = roadSpeed.getSpeedSensor1();
-        double speedData2 = roadSpeed.getSpeedSensor2();
+        String volumeData = roadVolume.getFileData(); // Retrieve formatted volume data
+        double speedData1 = roadSpeed.getSpeedSensor1(); // Speed from first sensor
+        double speedData2 = roadSpeed.getSpeedSensor2(); // Speed from second sensor
 
-        
+        // Format additional data for total volume, average volume, and average speed
         String additionalData = String.format("%d,%.2f,%.2f", calcVolumeTotal(), calcVolumeAvg(), calcSpeedAvg());
-//        return volumeData + "," + speedData + "," + additionalData;
-        return volumeData + "," + speedData + "," + speedData2 + "," + additionalData;
+        return volumeData + "," + speedData1 + "," + speedData2 + "," + additionalData;
     }
 
     /**
@@ -150,7 +145,7 @@ public class RoadSection {
      * @return The total volume.
      */
     public int calcVolumeTotal() {
-    	volumeTotal = (roadVolume.getVolumeSensor1() + roadVolume.getVolumeSensor2() + roadVolume.getVolumeSensor3() + roadVolume.getVolumeSensor4());
+        volumeTotal = roadVolume.getVolumeSensor1() + roadVolume.getVolumeSensor2() + roadVolume.getVolumeSensor3() + roadVolume.getVolumeSensor4();
         return volumeTotal;
     }
 
@@ -160,7 +155,7 @@ public class RoadSection {
      * @return The average volume.
      */
     public double calcVolumeAvg() {
-    	volumeAvg = (double) calcVolumeTotal() /4;
+        volumeAvg = (double) calcVolumeTotal() / 4;
         return volumeAvg;
     }
 
@@ -170,7 +165,7 @@ public class RoadSection {
      * @return The average speed.
      */
     public double calcSpeedAvg() {
-    	speedAvg = (roadSpeed.getSpeedSensor1() + roadSpeed.getSpeedSensor2())/2;
+        speedAvg = (roadSpeed.getSpeedSensor1() + roadSpeed.getSpeedSensor2()) / 2;
         return speedAvg;
     }
 }
